@@ -212,7 +212,7 @@ video#bgvid {
     flex-direction: column;
     overflow: hidden;
     z-index: -600;
-    opacity:0.4;
+    opacity:0.8;
 }
 
 .slide{
@@ -332,4 +332,6 @@ video#bgvid {
     opacity: 0.2;
 }
 
-
+#heartcoreLogo a:hover{
+    opacity: 0.4;
+}
