@@ -285,11 +285,12 @@ video#bgvid {
     position: absolute;
     bottom:5px;
     /*margin-top:5px;*/
-    left:50%;
-    padding: 5px;
-    transform: translate(-50%, 0%);
     /*margin-bottom:5px;*/
     z-index: 100;
+    /*margin-left: auto;*/
+    /*margin-right: auto;*/
+    left: 50%;
+    transform: translate(-50%, 0%);
 }
 #nimaiFooterCredits{
     margin-top:5px;
@@ -300,6 +301,7 @@ video#bgvid {
 .nimaiFooterCredit {
     font-size: 1.2vmin;
     padding-bottom: 5px;
+    opacity: 0.5;
     white-space: nowrap;
 }
 
@@ -324,7 +326,7 @@ video#bgvid {
     width: 130px;
     padding: 10px;
     background-image: url(../images/Heartcore_Music_Logo_WHT_160x102.png);
-    bacbgvidkground-repeat: no-repeat;
+    background-repeat: no-repeat;
     background-position: center center;
     margin-left: auto;
     margin-right: auto;
