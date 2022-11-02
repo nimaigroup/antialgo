@@ -212,7 +212,10 @@ video#bgvid {
     flex-direction: column;
     overflow: hidden;
     z-index: -600;
-    opacity:0.8;
+    opacity: 0.8;
+    width: 80%;
+    left: 50%;
+    transform: translate(-50%, 0%);
 }
 
 .slide{
