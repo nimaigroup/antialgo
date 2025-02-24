@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slideshow with Audio Player</title>
+	
+	<!-- /* GROK3 AI CODE */ -->
+	<!-- /* Write the code for a simple, mobile friendly, responsive HTML5 website with a full screen background slide show and an audio player with multiple audio files. */ -->
+    
+	<style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            overflow: hidden;
+			background-color: black;
+			color: white; /* Optional: to ensure text is readable */
+        }
+		
+		video#bgvid {
+			position: fixed;
+			right: 0;
+			bottom: -100;
+			min-width: 100%;
+			min-height: 100%;
+			width: auto;
+			height: auto;
+			z-index: -100;
+			background: url(../video/stormy_waters_1.jpg) no-repeat;
+			background-size: cover;
+			opacity: 0.7;
+			z-index: -500;
+		}		
+
+        /* Slideshow Styles */
+        .slideshow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            <!-- height: 100%; -->
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        /* Audio Player Styles */
+        .audio-player {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            max-width: 90%;
+            width: 400px;
+        }
+
+        .track-list {
+            max-height: 150px;
+            overflow-y: auto;
+            margin-top: 10px;
+        }
+
+        .track {
+            padding: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .track:hover, .track.active {
+            background: #f0f0f0;
+        }
+
+        audio {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .audio-player {
+                width: 90%;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+	<video id="bgvid" autoplay muted loop poster="video/stormy_waters_2.jpg">
+        <source src="video/StormyWaters_tiny_wThunder.mp4" type="video/mp4">
+        <source src="video/stormy_waters_noSound.webm" type="video/webm">
+    </video>
+
+    <div class="slideshow">
+        <img src="images/bg/AntiAlgo_Logo_1440x432.png" class="slide active" alt="Slide 1">
+        <img src="images/bg/AntiAlgo_binary_1440x432.png" class="slide" alt="Slide 2">
+        <!-- <img src="https://picsum.photos/1920/1080?random=3" class="slide" alt="Slide 3"> -->
+    </div>
+
+    <div class="audio-player">
+        <h2>Audio Player</h2>
+        <audio id="audioPlayer" controls></audio>
+        <div class="track-list" id="trackList">
+            <div class="track" data-src="audio/singularity/190612-00110000.mp3">Track 1</div>
+            <div class="track" data-src="audio/singularity/190613-00110001.mp3">Track 2</div>
+            <div class="track" data-src="audio/singularity/190614-00110010.mp3">Track 3</div>
+        </div>
+    </div>
+
+    <script>
+        // Slideshow functionality
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+
+        setInterval(nextSlide, 5000); // Change slide every 5 seconds
+
+        // Audio player functionality
+        const audioPlayer = document.getElementById('audioPlayer');
+        const tracks = document.querySelectorAll('.track');
+        let currentTrack = null;
+
+        tracks.forEach(track => {
+            track.addEventListener('click', function() {
+                if (currentTrack) {
+                    currentTrack.classList.remove('active');
+                }
+                
+                this.classList.add('active');
+                currentTrack = this;
+                audioPlayer.src = this.dataset.src;
+                audioPlayer.play();
+            });
+        });
+
+        // Auto-play next track when current one ends
+        audioPlayer.addEventListener('ended', () => {
+            const currentIndex = Array.from(tracks).indexOf(currentTrack);
+            const nextIndex = (currentIndex + 1) % tracks.length;
+            
+            if (currentTrack) {
+                currentTrack.classList.remove('active');
+            }
+            
+            tracks[nextIndex].classList.add('active');
+            currentTrack = tracks[nextIndex];
+            audioPlayer.src = currentTrack.dataset.src;
+            audioPlayer.play();
+        });
+    </script>
+</body>
+</html>
