@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Slideshow Audio Player</title>
+    <!-- /* GEMINI AI CODE */ -->
+	<!-- /* Write the code for a simple, mobile friendly, responsive HTML5 website with a full screen background slide show and an audio player with multiple audio files. */ -->
+	<style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden; /* Hide scrollbars */
+            font-family: sans-serif;
+			background-color: black;
+			color: white; /* Optional: to ensure text is readable */
+        }
+		
+		video#bgvid {
+			position: fixed;
+			right: 0;
+			bottom: -100;
+			min-width: 100%;
+			min-height: 100%;
+			width: auto;
+			height: auto;
+			z-index: -100;
+			background: url(../video/stormy_waters_1.jpg) no-repeat;
+			background-size: cover;
+			opacity: 0.7;
+			z-index: 0;
+		}
+
+        #slideshow {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+        }
+
+        #slideshow img {
+            position: absolute;
+            width: 100%;
+            <!-- height: 100%; -->
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        #audio-player {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+			z-index: 20;
+        }
+
+        #audio-player audio {
+            width: 100%;
+        }
+
+        #track-list {
+            margin-top: 10px;
+        }
+
+        #track-list button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+<body>
+
+	<video id="bgvid" autoplay muted loop poster="video/stormy_waters_2.jpg">
+        <source src="video/StormyWaters_tiny_wThunder.mp4" type="video/mp4">
+        <source src="video/stormy_waters_noSound.webm" type="video/webm">
+    </video>
+	
+    <div id="slideshow">
+        <img src="images/bg/AntiAlgo_Logo_1440x432.png" alt="AntiAlgo Logo" class="active">
+        <img src="images/bg/AntiAlgo_binary_1440x432.png" alt="AntiAlgo Logo Binary">
+    </div>
+
+    <div id="audio-player">
+        <audio id="audio" controls></audio>
+        <div id="track-list">
+            <button data-src="audio/singularity/190612-00110000.mp3"> 1 </button>
+            <button data-src="audio/singularity/190613-00110001.mp3"> 2 </button>
+            <button data-src="audio/singularity/190614-00110010.mp3"> 3 </button>
+            <button data-src="audio/singularity/190614-00110011.mp3"> 4 </button>
+            <button data-src="audio/singularity/190615-00110100.mp3"> 5 </button>
+            <button data-src="audio/singularity/190619-00110101.mp3"> 6 </button>
+        </div>
+    </div>
+	
+	<footer id="nimaiFooter" class="">
+		<div id="heartcoreLogo" class="">
+
+		</div>
+		<div id="nimaiFooterCredits" class="">
+			<div class="nimaiFooterCredit">
+				<a href="http://www.nimaigroup.com/" target="_blank">Another NIMAI GROUP WebArt Masterpiece <super style="font-size: 1.3vmin;">&#8480</super></a>
+			</div>
+		</div>
+	</footer> <!-- END nimaiFooter -->
+
+    <script>
+		const slideshowImages = document.querySelectorAll('#slideshow img');
+		let currentImageIndex = 0;
+
+		function showNextImage() {
+			slideshowImages[currentImageIndex].style.opacity = 0;
+			currentImageIndex = (currentImageIndex + 1) % slideshowImages.length;
+			slideshowImages[currentImageIndex].style.opacity = 1;
+		}
+
+		setInterval(showNextImage, 5000);
+
+		const audio = document.getElementById('audio');
+		const trackButtons = document.querySelectorAll('#track-list button');
+
+		trackButtons.forEach(button => {
+			button.addEventListener('click', () => {
+				const src = button.getAttribute('data-src');
+				audio.src = src;
+				audio.play();
+			});
+		});
+
+		slideshowImages[0].style.opacity = 1;
+
+		// Automatically play the first track
+		if (trackButtons.length > 0) {
+			const firstTrackSrc = trackButtons[0].getAttribute('data-src');
+			audio.src = firstTrackSrc;
+			audio.play();
+		}
+	</script>
+	
+
+</body>
+</html>
